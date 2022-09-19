@@ -38,6 +38,7 @@ ActiveRecord::Schema.define do
     table.column :last_name, :string
     table.column :hourly_rate, :integer
     table.timestamps null: false
+    table.column :password, :string
   end
 end
 
