@@ -31,13 +31,22 @@ class Employee
 end
 
 class Store
-  validates :name, length: { minimum: 3 }
-  validates :annual_revenue, numericality: { in: 0.. }
-  validate :carry_some_clothing
+  before_destroy :employee_check
 
-  def carry_some_clothing
-    if !womens_apparel && !mens_apparel
-      errors.add(:womens_apparel, "must stock some clothing")
+  validates :name, length: { minimum: 3 }
+  # validates :annual_revenue, numericality: { in: 0.. }
+  # validate :carry_some_clothing
+
+  # def carry_some_clothing
+  #   if !womens_apparel && !mens_apparel
+  #     errors.add(:womens_apparel, "must stock some clothing")
+  #   end
+  # end
+
+  private
+  def employee_check
+    if !self.employees.empty?
+      throw :abort
     end
   end
 
@@ -48,4 +57,4 @@ puts "Give me a store name:"
 
 failing_store = Store.create(name: @store_name)
 
-p failing_store.errors
+# p failing_store.errors
